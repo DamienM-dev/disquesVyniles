@@ -17,6 +17,7 @@ public class VinyleApplication extends Application {
         stage.show();
     }
 
+
     public static void main(String[] args) {
         launch();
     }
