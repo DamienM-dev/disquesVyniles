@@ -58,6 +58,8 @@ public class VinyleController {
 
     @FXML
     private MenuItem EnvoiCourriel;
+    @FXML
+    private MenuItem enregistrerBdd;
 
 
 
@@ -109,6 +111,30 @@ public class VinyleController {
         Scene scene1= new Scene(layout, 300, 250);
         popupwindow.setScene(scene1);
         popupwindow.showAndWait();
+    }
+    public void PopUpValidationBDD() throws IOException {
+        PopupSceneValidationBDD();
+    }
 
+    public void PopupSceneValidationBDD() throws IOException {
+
+        Stage popupwindow=new Stage();
+
+        popupwindow.initModality(Modality.APPLICATION_MODAL);
+        popupwindow.setTitle("Transmission BDD");
+        Label label1= new Label("Transmission des données à la base de données");
+        Label label2= new Label("Cliquez sur Valider pour lancer la transmission: ");
+        Button button1= new Button("Valider");
+        Button button2= new Button("Annuler");
+        button2.setOnAction(e -> popupwindow.close());
+        VBox layout= new VBox(10);
+        layout.getChildren().addAll(label1);
+        layout.getChildren().addAll(label2);
+        layout.getChildren().addAll(button1);
+        layout.getChildren().addAll(button2);
+        layout.setAlignment(Pos.CENTER);
+        Scene scene1= new Scene(layout, 300, 250);
+        popupwindow.setScene(scene1);
+        popupwindow.showAndWait();
     }
 }

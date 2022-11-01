@@ -72,7 +72,7 @@
                   <items>
                     <MenuItem mnemonicParsing="false" text="Enregistrer dans un fichier" />
                         <MenuItem fx:id="EnvoiCourriel" mnemonicParsing="false" onAction="#onPopupClick" text="Envoi Couriel" />
-                        <MenuItem mnemonicParsing="false" text="Enregistrer dans la base de données" />
+                        <MenuItem fx:id="enregistrerBdd" mnemonicParsing="false" onAction="#PopupSceneValidationBDD" text="Enregistrer dans la base de données" />
                         <MenuItem mnemonicParsing="false" text="Quitter" />
                   </items>
                 </Menu>

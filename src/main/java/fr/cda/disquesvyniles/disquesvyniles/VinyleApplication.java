@@ -17,6 +17,14 @@ public class VinyleApplication extends Application {
         stage.show();
     }
 
+    public void start1(Stage stage1) throws  IOException {
+        FXMLLoader fxmlLoader1 = new FXMLLoader(VinyleApplication.class.getResource("ihmBDD.fxml"));
+        Scene scene1 = new Scene(fxmlLoader1.load(), 700, 500);
+        stage1.setTitle("Paramétres de la base de donnée");
+        stage1.setScene(scene1);
+        stage1.show();
+    }
+
 
     public static void main(String[] args) {
         launch();
