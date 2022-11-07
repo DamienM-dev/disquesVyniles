@@ -29,8 +29,6 @@ public class VinyleCorner {
         webClient.getOptions().setJavaScriptEnabled(false);
         HtmlPage htmlPage = webClient.getPage(url);
 
-        File rep = new File("ResultatDeRecherches");
-        rep.mkdir();
 
         String nomFichierSortie = "ResultatDeRecherches" + File.separator + search.toLowerCase() + ".txt";
 

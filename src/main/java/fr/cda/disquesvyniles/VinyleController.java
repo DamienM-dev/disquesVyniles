@@ -9,8 +9,9 @@ import javafx.scene.control.*;
 import javafx.scene.layout.VBox;
 import javafx.stage.Modality;
 import javafx.stage.Stage;
+import javafx.stage.FileChooser;
 
-import java.io.IOException;
+import java.io.*;
 import java.text.MessageFormat;
 
 public class VinyleController {
@@ -64,12 +65,55 @@ public class VinyleController {
 
     private MenuItem SceneConfigurationBdd;
 
+    @FXML
+    protected void RechercheInfo() {
+
+        String rechercherTitre = champsTitre.getText();
+        String rechercheGenre = champsGenre.getValue().toString();
+        String rechercherDate = champsDate.getValue().toString().substring(0, 4);
+        String recherchePrixMin = champsMin.getText();
+        String recherchePrixMinPrixMin = champsMax.getText();
+        boolean rechercheDiscogs = checkboxDiscogs.isSelected();
+        boolean rechercheFnac = checkboxFnac.isSelected();
+        boolean rechercheVinylCorner = checkboxVinylcorner.isSelected();
+        boolean rechercheLeboncoin = checkboxLeboncoin.isSelected();
+        boolean rechercheMesVinyles = checkboxMesvinyles.isSelected();
+        boolean rechercheCultureFactory = checkboxCulturefactory.isSelected();
+    }
+
+    @FXML
+    public void EnregistrementFichier() throws IOException {
+        /* Si text area vide, j'affiche un message */
+        if (enregistrerBdd.getText().equals("")){
+            enregistrerBdd.setText("Il n'y a aucun article à enregistrer");
+        }else{
+            /* Sinon creation du fichier */
+            String rechercheFichier = enregistrerBdd.getText();
+            try {
+                FileChooser fileChooser = new FileChooser();
+                FileChooser.ExtensionFilter extFilter =
+                        new FileChooser.ExtensionFilter("TEXT files (*.txt)", "*.txt");
+            fileChooser.getExtensionFilters().add(extFilter);
+                fileChooser.setInitialDirectory(new File("./ResultatDeRecherches"));
+                fileChooser.setTitle("");
+                File selectedFile = fileChooser.showSaveDialog(null);
+                String path = selectedFile.getAbsolutePath();
+
+                PrintWriter ecrire = new PrintWriter(new BufferedWriter
+                        (new FileWriter(path)));
+                ecrire.println(rechercheFichier);
+                ecrire.close();
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
+        }
+    }
 
 
     public void effacerChamps() {
 
         champsTitre.setText("");
-        champsGenre.setValue(null) ;
+        champsGenre.setValue(null);
         champsDate.setValue(null);
         champsMin.setText("");
         champsMax.setText("");
@@ -160,6 +204,5 @@ public class VinyleController {
 
         ConfigurationBdd();
     }
-
 
 }

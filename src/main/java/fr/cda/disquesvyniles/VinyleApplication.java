@@ -1,9 +1,21 @@
 package fr.cda.disquesvyniles;
 
+
 import javafx.application.Application;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Scene;
 import javafx.stage.Stage;
+
+
+import sendinblue.*;
+import sendinblue.auth.*;
+import sibModel.*;
+import sibApi.AccountApi;
+
+import java.nio.file.Files;
+import java.nio.file.Paths;
+import java.util.*;
+import java.util.List;
 
 import java.io.IOException;
 
@@ -17,8 +29,8 @@ public class VinyleApplication extends Application {
         stage.show();
     }
 
-
     public static void main(String[] args) {
         launch();
-    }
+
+}
 }
