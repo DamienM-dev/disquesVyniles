@@ -6,6 +6,7 @@ module fr.cda.disquesvyniles {
     requires com.dlsc.formsfx;
     requires htmlunit;
     requires sib.api.v3.sdk;
+    requires javax.mail.api;
 
 
     opens fr.cda.disquesvyniles to javafx.fxml;

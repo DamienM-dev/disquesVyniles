@@ -11,8 +11,18 @@ import javafx.stage.Modality;
 import javafx.stage.Stage;
 import javafx.stage.FileChooser;
 
+import fr.cda.scol.Fnac;
+import fr.cda.scol.CultureFactory;
+import fr.cda.scol.VinyleCorner;
+import fr.cda.scol.Discogs;
+import fr.cda.scol.Leboncoin;
+import fr.cda.scol.mesvinyles;
+
+import javax.mail.*;
+import javax.mail.internet.*;
 import java.io.*;
 import java.text.MessageFormat;
+import java.util.Properties;
 
 public class VinyleController {
     @FXML
@@ -66,7 +76,7 @@ public class VinyleController {
     private MenuItem SceneConfigurationBdd;
 
     @FXML
-    protected void RechercheInfo() {
+    protected void RechercheInfo() throws IOException {
 
         String rechercherTitre = champsTitre.getText();
         String rechercheGenre = champsGenre.getValue().toString();
@@ -79,6 +89,30 @@ public class VinyleController {
         boolean rechercheLeboncoin = checkboxLeboncoin.isSelected();
         boolean rechercheMesVinyles = checkboxMesvinyles.isSelected();
         boolean rechercheCultureFactory = checkboxCulturefactory.isSelected();
+        String res = "";
+
+        if(rechercheFnac) {
+
+            res += Fnac.FnacScrapping(rechercherTitre);
+        }
+
+       else if(rechercheCultureFactory) {
+            res += CultureFactory.CultureFactoryScrapping(rechercherTitre);
+        }
+        else if(rechercheVinylCorner) {
+            res += VinyleCorner.VinylCornerScrapping(rechercherTitre);
+        }
+        else if(rechercheDiscogs) {
+            res += Discogs.DiscogsScrapping(String.valueOf(rechercherTitre));
+        }
+        else if(rechercheLeboncoin) {
+            res += Leboncoin.ScrapLeboncoin(rechercherTitre);
+        } else if (rechercheMesVinyles) {
+
+            res += mesvinyles.ScrapingMesvinyles(rechercherTitre);
+
+        }
+        champsResultat.setText(res);
     }
 
     @FXML
@@ -124,7 +158,16 @@ public class VinyleController {
         checkboxLeboncoin.setSelected(false);
         checkboxMesvinyles.setSelected(false);
         checkboxCulturefactory.setSelected(false);
+
     }
+
+    public void SceneConfigurationBdd() throws IOException {
+
+
+        ConfigurationBdd();
+    }
+
+
 
     public void quitterFichier() {
 
@@ -146,7 +189,14 @@ public class VinyleController {
         TextField textField = new TextField();
         Button button1= new Button("Envoyer");
         Button button2= new Button("Annuler");
-        button1.setOnAction(e -> popupwindow.close());
+        button1.setOnAction(e -> {
+            try {
+                MailSender.envoiCourriel( );
+            } catch (MessagingException ex) {
+                throw new RuntimeException(ex);
+            }
+            popupwindow.close();
+        });
         button2.setOnAction(e -> popupwindow.close());
         VBox layout= new VBox(10);
         layout.getChildren().addAll(label1);
@@ -198,11 +248,6 @@ public class VinyleController {
             e.printStackTrace();
         }
     }
-
-    public void SceneConfigurationBdd() throws IOException {
-
-
-        ConfigurationBdd();
-    }
-
 }
+
+

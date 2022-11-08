@@ -7,11 +7,19 @@ import javafx.scene.Scene;
 import javafx.stage.Stage;
 
 
+
+
 import sendinblue.*;
 import sendinblue.auth.*;
 import sibModel.*;
 import sibApi.AccountApi;
 
+import javax.mail.*;
+import javax.mail.internet.InternetAddress;
+import javax.mail.internet.MimeBodyPart;
+import javax.mail.internet.MimeMessage;
+import javax.mail.internet.MimeMultipart;
+import javax.mail.internet.AddressException;
 import java.nio.file.Files;
 import java.nio.file.Paths;
 import java.util.*;
@@ -29,8 +37,10 @@ public class VinyleApplication extends Application {
         stage.show();
     }
 
-    public static void main(String[] args) {
+    public static void main(String[] args) throws MessagingException {
         launch();
+
+
 
 }
 }

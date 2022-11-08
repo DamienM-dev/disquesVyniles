@@ -76,7 +76,6 @@ public class CultureFactory {
 package fr.cda.scol;
 
 import com.gargoylesoftware.htmlunit.WebClient;
-import com.gargoylesoftware.htmlunit.html.HtmlAnchor;
 import com.gargoylesoftware.htmlunit.html.HtmlElement;
 import com.gargoylesoftware.htmlunit.html.HtmlPage;
 
@@ -84,13 +83,7 @@ import java.io.*;
 import java.util.List;
 
 public class CultureFactory {
-    public static void main(String[] args) throws IOException {
-
-        PrintWriter ecrire;
-        BufferedReader impression = new BufferedReader(new InputStreamReader(System.in));
-
-        System.out.println("Entrez le nom de l'artiste : ");
-        String search = impression.readLine();
+    public static String CultureFactoryScrapping(String search) throws IOException {
 
 
         String url = "https://culturefactory.fr/recherche?controller=search&s=" + search;
@@ -102,26 +95,22 @@ public class CultureFactory {
         webClient.getOptions().setJavaScriptEnabled(false);
         HtmlPage htmlPage = webClient.getPage(url);
 
-        File rep = new File("ResultatDeRecherches");
-        rep.mkdir();
 
-        String nomFichierSortie = "ResultatDeRecherches" + File.separator + search.toLowerCase() + ".txt";
 
         String ValueNA = "";
         String ValuePrix = "";
         String ValueDesc = "";
         String ValueNAlbum = "";
+        String res ="";
 
+        try {
+            List<HtmlElement> general = htmlPage.getByXPath("//h4/a[@href]");
 
-        List<HtmlAnchor> li = (htmlPage.getAnchors());
-        List<HtmlElement> general = htmlPage.getByXPath("//h4/a[@href]");
-
-        for (HtmlAnchor e : li) {
 
             for (HtmlElement gr : general) {
 
                 HtmlPage htmlPage1 = webClient.getPage(gr.click().getUrl());
-                List<HtmlElement> nomArtistes = htmlPage1.getByXPath("//h1[@class='h1 namne_details']");
+                List<HtmlElement> nomArtistes = htmlPage1.getByXPath("//html/body/main/div[1]/div[1]/nav/ol/li[2]/a/span\n");
                 List<HtmlElement> prix = htmlPage1.getByXPath("//html/body/main/div[1]/div[2]/div/div/section/div[1]/div[2]/div[1]/div[1]/div/span");
                 List<HtmlElement> description = htmlPage1.getByXPath("//div[@class='product-desc']");
                 List<HtmlElement> album = htmlPage1.getByXPath("//h1[@class='h1 namne_details']");
@@ -143,8 +132,23 @@ public class CultureFactory {
                     ValuePrix = px.getTextContent();
                     System.out.println("prix: " + ValuePrix);
                 }
+                res += "Nom Artiste: " + ValueNA + "\n" +
+                        "Nom Album: " + ValueNAlbum + "\n" +
+                        "Description: " + ValueDesc + "\n" +
+                        "Prix: " + ValuePrix + "\n" +
+                        "lien : " + htmlPage1.getUrl() +
+                        "\n--------------------------------------------------------------------\n";
             }
-        }
+
+            } catch(IOException e) {
+                e.printStackTrace();
+            }
+            return res;
+
+
+
     }
-}
+    }
+
+
 
