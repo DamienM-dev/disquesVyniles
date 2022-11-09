@@ -1,5 +1,7 @@
 package fr.cda.disquesvyniles;
 
+
+import javafx.application.HostServices;
 import javafx.application.Platform;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
@@ -10,6 +12,7 @@ import javafx.scene.layout.VBox;
 import javafx.stage.Modality;
 import javafx.stage.Stage;
 import javafx.stage.FileChooser;
+
 
 import fr.cda.scol.Fnac;
 import fr.cda.scol.CultureFactory;
@@ -72,10 +75,16 @@ public class VinyleController {
     @FXML
     private MenuItem enregistrerBdd;
     @FXML
-
     private MenuItem SceneConfigurationBdd;
 
     @FXML
+
+    private MenuItem modeEmploi;
+
+
+
+    @FXML
+    /** recherche des infos pour le scrapping et incrementation du text area **/
     protected void RechercheInfo() throws IOException {
 
         String rechercherTitre = champsTitre.getText();
@@ -114,8 +123,19 @@ public class VinyleController {
         }
         champsResultat.setText(res);
     }
+public void ouvrirModeEmploi() {
+    FileChooser fileChooser = new FileChooser();
+    FileChooser.ExtensionFilter extFilter =
+            new FileChooser.ExtensionFilter("PDF files (*.pdf)", "*.pdf");
+    fileChooser.getExtensionFilters().add(extFilter);
+    fileChooser.setInitialDirectory(new File("./guides/scrapping.pdf"));
+    File selectedFile = fileChooser.showSaveDialog(null);
+    String path = selectedFile.getAbsolutePath();
+}
 
     @FXML
+    /** enregistrement du fichier de la recherche dans un dossier **/
+
     public void EnregistrementFichier() throws IOException {
         /* Si text area vide, j'affiche un message */
         if (enregistrerBdd.getText().equals("")){
@@ -143,7 +163,7 @@ public class VinyleController {
         }
     }
 
-
+    /** reset des champs **/
     public void effacerChamps() {
 
         champsTitre.setText("");
@@ -161,6 +181,8 @@ public class VinyleController {
 
     }
 
+    /** Lancement de la pop up de config bdd **/
+
     public void SceneConfigurationBdd() throws IOException {
 
 
@@ -168,6 +190,7 @@ public class VinyleController {
     }
 
 
+    /** configuration du bouton quitter **/
 
     public void quitterFichier() {
 
@@ -178,6 +201,7 @@ public class VinyleController {
         PopupScene();
     }
 
+    /** popup de l envoi de email **/
     public void PopupScene() throws IOException {
 
         Stage popupwindow=new Stage();
@@ -186,17 +210,14 @@ public class VinyleController {
         popupwindow.setTitle("Envoi courriel");
         Label label1= new Label("saisie du courriel");
         Label label2= new Label("Veuillez saisir l'email de l'expéditeur");
-        TextField textField = new TextField();
+        TextField textField  = new TextField();
         Button button1= new Button("Envoyer");
         Button button2= new Button("Annuler");
         button1.setOnAction(e -> {
-            try {
-                MailSender.envoiCourriel( );
-            } catch (MessagingException ex) {
-                throw new RuntimeException(ex);
-            }
+            MailSender.send(textField.getText(),champsResultat.getText());
             popupwindow.close();
         });
+
         button2.setOnAction(e -> popupwindow.close());
         VBox layout= new VBox(10);
         layout.getChildren().addAll(label1);
@@ -209,10 +230,12 @@ public class VinyleController {
         popupwindow.setScene(scene1);
         popupwindow.showAndWait();
     }
+    /** lancement popup validation bdd **/
     public void PopUpValidationBDD() throws IOException {
         PopupSceneValidationBDD();
     }
 
+    /** creation de la popup validation bdd **/
     public void PopupSceneValidationBDD() throws IOException {
 
         Stage popupwindow=new Stage();
@@ -234,6 +257,8 @@ public class VinyleController {
         popupwindow.setScene(scene1);
         popupwindow.showAndWait();
     }
+    /** ihm de la config de bdd **/
+
     public void ConfigurationBdd() throws  IOException {
 
         try {

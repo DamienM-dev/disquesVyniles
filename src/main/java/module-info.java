@@ -7,6 +7,7 @@ module fr.cda.disquesvyniles {
     requires htmlunit;
     requires sib.api.v3.sdk;
     requires javax.mail.api;
+    requires dotenv.java;
 
 
     opens fr.cda.disquesvyniles to javafx.fxml;

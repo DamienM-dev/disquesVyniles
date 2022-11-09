@@ -82,7 +82,7 @@
                 </Menu>
                 <Menu mnemonicParsing="false" text="Aide">
                   <items>
-                    <MenuItem mnemonicParsing="false" text="Mode d'emploi" />
+                    <MenuItem fx:id="modeEmploi" mnemonicParsing="false" onAction="#ouvrirModeEmploi" text="Mode d'emploi" />
                   </items>
                 </Menu>
               </menus>

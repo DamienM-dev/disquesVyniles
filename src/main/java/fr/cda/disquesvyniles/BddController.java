@@ -11,8 +11,7 @@ public class BddController {
     @FXML
     private Button fermer;
 
-
-
+    /** bouton fermer **/
     public void quitterFichier() {
 
         Platform.exit();

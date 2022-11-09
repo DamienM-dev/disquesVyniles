@@ -33,8 +33,8 @@ public class Leboncoin {
                 String description = "";
 
                 List<HtmlElement> nom = htmlPage1.getByXPath("//h1[@data-qa-id='adview_title']");
-                List<HtmlElement> prix = htmlPage1.getByXPath("//span[@class='Roh2X _3gP8T _35DXM _25LNb']");
-                List<HtmlElement> desc = htmlPage1.getByXPath("//p[@class='sc-bhlBdH gOkeRT']");
+                List<HtmlElement> prix = htmlPage1.getByXPath("//html/body/div[2]/div/div[1]/div/div[1]/main/div/div/article/article/section[1]/div[3]/div/span/div/div[1]/div/span");
+                List<HtmlElement> desc = htmlPage1.getByXPath("//html/body/div[2]/div/div[1]/div/div[1]/main/div/div/article/article/div[6]/div/div/p");
 
                 for (HtmlElement n : nom) {
                     nomArticle = n.getTextContent();
