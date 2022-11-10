@@ -21,22 +21,22 @@ import java.util.*;
 /** class gerant l envois de mail **/
 
 public class MailSender{
-    public static void send(String mail,String search) {
+    public static void send(String textField,String champsResultat) {
         Dotenv dotenv = Dotenv.load();
         ApiClient defaultClient = Configuration.getDefaultApiClient();
 
         // Configure API key authorization: api-key
         ApiKeyAuth apiKey = (ApiKeyAuth) defaultClient.getAuthentication("api-key");
-        apiKey.setApiKey("");
+        apiKey.setApiKey("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");
 
         AccountApi apiInstance = new AccountApi();
 
         try {
 
-            String path = "search.txt";
+            String path = "R";
             PrintWriter ecrire = new PrintWriter(new BufferedWriter
                     (new FileWriter(path)));
-            ecrire.println(search);
+            ecrire.println(champsResultat);
             ecrire.close();
             TransactionalEmailsApi api = new TransactionalEmailsApi();
             SendSmtpEmailSender sender = new SendSmtpEmailSender();
@@ -46,14 +46,14 @@ public class MailSender{
             List<SendSmtpEmailTo> toList = new ArrayList<SendSmtpEmailTo>();
             SendSmtpEmailTo to = new SendSmtpEmailTo();
 
-            to.setEmail(mail);
+            to.setEmail(textField);
             toList.add(to);
             SendSmtpEmailReplyTo replyTo = new SendSmtpEmailReplyTo();
             replyTo.setEmail(dotenv.get("SENDER_MAIL"));
             replyTo.setName("John Doe");
             SendSmtpEmailAttachment attachment = new SendSmtpEmailAttachment();
-            attachment.setName("search.txt");
-            byte[] encode = Files.readAllBytes(Paths.get("search.txt"));
+            attachment.setName("test.txt");
+            byte[] encode = Files.readAllBytes(Paths.get("./ResultatDeRecherches"));
             attachment.setContent(encode);
             List<SendSmtpEmailAttachment> attachmentList = new ArrayList<SendSmtpEmailAttachment>();
             attachmentList.add(attachment);

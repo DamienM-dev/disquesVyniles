@@ -155,7 +155,7 @@ public void ouvrirModeEmploi() {
 
                 PrintWriter ecrire = new PrintWriter(new BufferedWriter
                         (new FileWriter(path)));
-                ecrire.println(rechercheFichier);
+                ecrire.println(champsResultat.getText());
                 ecrire.close();
             } catch (Exception e) {
                 e.printStackTrace();
